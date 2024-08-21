@@ -15,9 +15,9 @@ public class StreamDataService {
         this.repository = repository;
     }
 
-    public StreamData insertHexData(String hexString) {
+    public StreamData insertHexData(String hexData, String configuration, String enrollment, String attendance) {
         // Create a new StreamData object and insert it into the collection
-        StreamData streamData = new StreamData(hexString);
+        StreamData streamData = new StreamData(hexData, configuration, enrollment, attendance);
         return repository.save(streamData);
     }
 }

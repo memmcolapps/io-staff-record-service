@@ -19,7 +19,6 @@ public class NettyServer {
     public NettyServer(StreamDataService streamDataService) {
         this.streamDataService = streamDataService;
     }
-
     public void startServer() throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup(3);
         EventLoopGroup workerGroup = new NioEventLoopGroup();

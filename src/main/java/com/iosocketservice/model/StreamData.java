@@ -13,12 +13,20 @@ public class StreamData {
     @Id
     private String id;  // The unique document identifier
     @Setter
-    private String hexString;
+    private String configuration;
+    @Setter
+    private String enrollment;
+    @Setter
+    private String attendance;
+    @Setter
+    private String hexData;
 
     // Constructor
-    public StreamData(String hexString) {
-        this.hexString = hexString;
+    public StreamData(String hexData, String configuration, String enrollment, String attendance) {
+        this.hexData = hexData;
+        this.configuration = configuration;
+        this.enrollment = enrollment;
+        this.attendance = attendance;
     }
-
 }
 
