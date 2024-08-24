@@ -25,7 +25,7 @@ public class StreamDataService {
 //        return repository.save(streamData);
 //    }
 
-    public void postData(String openingFlag, String deviceId, String packetType, String packetLength, String packetSize, String actualData, String crc, String closingFlag) {
+    public void postData1(String openingFlag, String deviceId, String packetType, String packetLength, String packetSize, String actualData, String crc, String closingFlag) {
 
         // Remove spaces from the hex string
         String hexNumber = openingFlag.replaceAll("\\s", "");
@@ -40,6 +40,36 @@ public class StreamDataService {
 
 
 //        mapper.postStreamData();
+    }
+
+    public void postConfigurationHexRawData(String openingFlag, String deviceId, String packetType, String packetNumber,
+                         String packetLength, String packetSize, String deviceStatus, String fingerPrintId,
+                         String loginMemory, String configDateTime, String lastLoginDateTime, String nextLoginOffset,
+                         String prevRecordCount, String totalEnrolUser, String totalLoginUser, String totalRecordPush,
+                         String nextPushOffset, String adminIdTagNumber, String deviceIdNumber, String crc, String closingFlag) {
+        mapper.insertConfigurationHexData(
+                openingFlag, deviceId, packetType, packetNumber,
+                packetLength, packetSize, deviceStatus, fingerPrintId,
+                loginMemory, configDateTime, lastLoginDateTime, nextLoginOffset,
+                prevRecordCount, totalEnrolUser, totalLoginUser, totalRecordPush,
+                nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag
+        );
+    }
+
+    public void postEnrollmentHexRawData(String openingFlag, String deviceId, String packetType, String packetNumber, String packetLength, String packetSize, String fingerPrintId, String idTagNumber, String dateTime, String crc, String closingFlag) {
+        mapper.insertEnrollmentHexData(
+                openingFlag, deviceId, packetType, packetNumber,
+                packetLength, packetSize, fingerPrintId, idTagNumber,
+                dateTime, crc, closingFlag
+        );
+    }
+
+    public void postAttendanceHexRawData(String openingFlag, String deviceId, String packetType, String packetNumber, String packetLength, String packetSize, String fingerPrintId, String loginType, String dateTime, String crc, String closingFlag) {
+        mapper.insertAttendanceHexData(
+                openingFlag, deviceId, packetType, packetNumber,
+                packetLength, packetSize, fingerPrintId, loginType,
+                dateTime, crc, closingFlag
+        );
     }
 }
 

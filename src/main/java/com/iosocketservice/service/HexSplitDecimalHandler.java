@@ -35,6 +35,10 @@ public class HexSplitDecimalHandler {
     public void handleSplit(String hexData) {
         List<String> frames = splitHexFrames(hexData);
         String openingFlag = null;
+        String openingFlag1 = null;
+        String openingFlag2 = null;
+        String openingFlag3 = null;
+        String openingFlag4 = null;
         String deviceId = null;
         String packetNumber = null;
         String packetLength = null;
@@ -57,9 +61,9 @@ public class HexSplitDecimalHandler {
         String deviceStatus = null;
         String packetType = null;
         String idTagNumber = null;
-        String dataTime = null;
+        String dateTime = null;
         String loginType = null;
-        int decimalPacketSize = 0;
+        String decimalPacketSize = null;
         System.out.println("Frame>>>> : " + frames);
         System.out.println("Frame Size>>>> : " + frames.size());
         for(int inc = 0; inc < frames.size(); inc++){
@@ -67,10 +71,13 @@ public class HexSplitDecimalHandler {
 
             // Extract the opening flag bytes
             openingFlag = extractBytes(hexBytes, 0, 2);
+            openingFlag1 = extractBytes(hexBytes, 0, 1);
+            openingFlag2 = extractBytes(hexBytes, 1, 1);
+            openingFlag3 = convertHexToDecimal(openingFlag1);
+            openingFlag4 = convertHexToDecimal(openingFlag2);
 
             // Extract the device Id bytes
             deviceId = extractBytes(hexBytes, 2, 12);
-
             // Extract the packet number bytes
             packetType = extractBytes(hexBytes, 14, 1);
 
@@ -133,6 +140,13 @@ public class HexSplitDecimalHandler {
                 System.out.println("crc: " + crc);
                 System.out.println("closingFlag: " + closingFlag);
                 System.out.println("==============================================");
+                streamDataService.postConfigurationHexRawData(
+                        openingFlag, deviceId, packetType, packetNumber,
+                        packetLength, packetSize, deviceStatus, fingerPrintId,
+                        loginMemory, configDateTime, lastLoginDateTime, nextLoginOffset,
+                        prevRecordCount, totalEnrolUser, totalLoginUser, totalRecordPush,
+                        nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag);
+
             } else if(packetType.equals("02")){
                 // Process enrollment bytes
                 actualData = extractBytes(hexBytes, 18, hexBytes.length - 18); // Exclude first 14 and last 4
@@ -145,17 +159,21 @@ public class HexSplitDecimalHandler {
                 System.out.println("decimal Packet Size: " + decimalPacketSize);
                 System.out.println("Actual data: " + actualData);
 
-                int actualDataLength = decimalPacketSize/20;
+                int actualDataLength =  Integer.valueOf(decimalPacketSize)/20;
                 System.out.println("----------------:: "+actualDataLength);
                 for(int i = 0; i < actualDataLength; i++){
                     int pos = i*20;
                     fingerPrintId = extractBytes(hexBytes, 18+pos, 2);
                     idTagNumber = extractBytes(hexBytes, 20+pos, 12);
-                    dataTime = extractBytes(hexBytes, 32+pos, 7);
+                    dateTime = extractBytes(hexBytes, 32+pos, 7);
                     System.out.println("finger Print Id: " + fingerPrintId);
                     System.out.println("id Tag Number: " + idTagNumber);
-                    System.out.println("DateTime: " + dataTime);
+                    System.out.println("DateTime: " + dateTime);
                     System.out.println("---------------------------------------------------");
+                    streamDataService.postEnrollmentHexRawData(
+                            openingFlag, deviceId, packetType, packetNumber,
+                            packetLength, packetSize, fingerPrintId,
+                            idTagNumber, dateTime, crc, closingFlag);
                 }
                 System.out.println("crc: " + crc);
                 System.out.println("closingFlag: " + closingFlag);
@@ -171,29 +189,33 @@ public class HexSplitDecimalHandler {
                 System.out.println("packetSize: " + packetSize);
                 System.out.println("decimal Packet Size: " + decimalPacketSize);
                 System.out.println("Actual data: " + actualData);
-                int actualDataLength = decimalPacketSize/10;
+                int actualDataLength = Integer.valueOf(decimalPacketSize)/10;
                 System.out.println("----------------:: "+actualDataLength);
                 for(int i = 0; i < actualDataLength; i++){
                     int pos = i*10;
                     fingerPrintId = extractBytes(hexBytes, 18+pos, 2);
                     loginType = extractBytes(hexBytes, 20+pos, 1);
-                    dataTime = extractBytes(hexBytes, 21+pos, 7);
+                    dateTime = extractBytes(hexBytes, 21+pos, 7);
                     System.out.println("finger Print Id: " + fingerPrintId);
                     System.out.println("login Type: " + loginType);
-                    System.out.println("DateTime: " + dataTime);
+                    System.out.println("DateTime: " + dateTime);
                     System.out.println("---------------------------------------------------");
+                    streamDataService.postAttendanceHexRawData(
+                            openingFlag, deviceId, packetType, packetNumber,
+                            packetLength, packetSize, fingerPrintId,
+                            loginType, dateTime, crc, closingFlag);
                 }
                 System.out.println("crc: " + crc);
                 System.out.println("closingFlag: " + closingFlag);
             }
 
             assert openingFlag != null;
-            streamDataService.postData(openingFlag, deviceId, packetType, packetLength, packetSize, actualData, crc, closingFlag);
+//            streamDataService.postData(openingFlag, deviceId, packetType, packetLength, packetSize, actualData, crc, closingFlag);
 
         }
     }
 
-    public static int convertHexToDecimal(String packetSize){
+    public static String convertHexToDecimal(String packetSize){
         String hexNumber = packetSize.replaceAll("\\s", "");
         int decimalValue = 0;
         try {
@@ -203,7 +225,7 @@ public class HexSplitDecimalHandler {
         } catch (NumberFormatException e) {
             System.out.println("Invalid hexadecimal number");
         }
-        return decimalValue;
+        return String.valueOf(decimalValue);
     }
 
 
