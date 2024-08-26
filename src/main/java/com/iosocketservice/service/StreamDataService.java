@@ -71,5 +71,45 @@ public class StreamDataService {
                 dateTime, crc, closingFlag
         );
     }
+
+    public void postConfigurationDecimalData(
+            String openingFlagDec, String deviceIdDec, String packetType,
+            String packetNumber, String packetLength, String packetSizeDec,
+            String deviceStatusDec, String fingerPrintIdDec, String loginMemoryDec,
+            String configDateTimeDec, String lastLoginDateTimeDec, String nextLoginOffsetDec,
+            String prevRecordCountDec, String totalEnrolUserDec, String totalLoginUserDec,
+            String totalRecordPushDec, String nextPushOffsetDec, String adminIdTagNumberDec,
+            String deviceIdNumberDec, String crcDec, String closingFlagDec) {
+        mapper.insertConfigurationDecData(
+                openingFlagDec, deviceIdDec, packetType,
+                packetNumber, packetLength, packetSizeDec,
+                deviceStatusDec, fingerPrintIdDec, loginMemoryDec,
+                configDateTimeDec, lastLoginDateTimeDec, nextLoginOffsetDec,
+                prevRecordCountDec, totalEnrolUserDec, totalLoginUserDec,
+                totalRecordPushDec, nextPushOffsetDec, adminIdTagNumberDec,
+                deviceIdNumberDec, crcDec, closingFlagDec
+        );
+    }
+
+    public void postEnrollmentDecimalData(
+            String openingFlagDec, String deviceIdDec, String packetType, String packetNumber,
+            String packetLength, String packetSizeDec, String fingerPrintIdDec, String idTagNumberDec,
+            String dateTimeDec, String crcDec, String closingFlagDec) {
+        mapper.insertEnrollmentDecData(
+                openingFlagDec, deviceIdDec, packetType, packetNumber,
+                packetLength, packetSizeDec, fingerPrintIdDec, idTagNumberDec,
+                dateTimeDec, crcDec, closingFlagDec);
+
+    }
+
+    public void postAttendanceDecimalData(
+            String openingFlagDec, String deviceIdDec, String packetType, String packetNumber,
+            String packetLength, String packetSizeDec, String fingerPrintIdDec, String loginTypeDec,
+            String dateTimeDec, String crcDec, String closingFlagDec) {
+        mapper.insertAttendanceDecData(
+                openingFlagDec, deviceIdDec, packetType, packetNumber,
+                packetLength, packetSizeDec, fingerPrintIdDec, loginTypeDec,
+                dateTimeDec, crcDec, closingFlagDec);
+    }
 }
 
