@@ -245,7 +245,7 @@ public class HexSplitDecimalHandler {
                 }
                 System.out.println("crc: " + crc);
                 System.out.println("closingFlag: " + closingFlag);
-                System.out.println("==============================================");
+                System.out.println("====================----==========================");
             } else {
                 // Process attendance frame
                 actualData = extractBytes(hexBytes, 18, hexBytes.length - 18); // Exclude first 14 and last 4

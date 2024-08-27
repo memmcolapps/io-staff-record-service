@@ -2,11 +2,13 @@ package com.iosocketservice.service;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,14 +16,16 @@ import org.springframework.stereotype.Component;
 public class NettyServer {
 
     private final StreamDataService streamDataService;
-
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
+    private ChannelFuture channelFuture;
     @Autowired
     public NettyServer(StreamDataService streamDataService) {
         this.streamDataService = streamDataService;
     }
     public void startServer() throws InterruptedException {
-        EventLoopGroup bossGroup = new NioEventLoopGroup(3);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+         bossGroup = new NioEventLoopGroup(3);
+         workerGroup = new NioEventLoopGroup();
         final int port = 8883;
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -37,10 +41,26 @@ public class NettyServer {
 //            bootstrap.bind(8883).sync().channel().closeFuture().sync();
             Channel channel = bootstrap.bind(port).sync().channel();
             channel.closeFuture().sync();
+            System.out.println("Netty server started on port 8883");
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+    }
+
+    @PreDestroy
+    public void stopServer() {
+        System.out.println("Shutting down Netty server...");
+        if (channelFuture != null) {
+            channelFuture.channel().close();
+        }
+        if (bossGroup != null) {
+            bossGroup.shutdownGracefully();
+        }
+        if (workerGroup != null) {
+            workerGroup.shutdownGracefully();
+        }
+        System.out.println("Netty server stopped.");
     }
 }
 
