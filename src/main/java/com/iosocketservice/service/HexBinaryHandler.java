@@ -22,7 +22,6 @@ public class HexBinaryHandler extends ChannelInboundHandlerAdapter {
     private static final Logger log = LoggerFactory.getLogger(HexBinaryHandler.class);
     // Create a ChannelGroup to manage connected clients
     private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private final List<Object> data = new ArrayList<>();
 
     private final StreamDataService streamDataService;
     public HexBinaryHandler(StreamDataService streamDataService) {
@@ -53,13 +52,13 @@ public class HexBinaryHandler extends ChannelInboundHandlerAdapter {
                         //channel.writeAndFlush(hexString);
                         channel.writeAndFlush(Unpooled.copiedBuffer(hexData + "\n", CharsetUtil.UTF_8));
                         log.info("Received HEX data {}", hexData);
-                    }else {
+                    } else {
 //                        streamDataService.insertHexData(hexString);
                     }
 
                 }
             } finally {
-                buf.release();
+                buf.release(); // Prevent memory leak
             }
         } else {
             ctx.fireChannelRead(msg);

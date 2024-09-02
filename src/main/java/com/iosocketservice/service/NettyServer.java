@@ -24,11 +24,11 @@ public class NettyServer {
         this.streamDataService = streamDataService;
     }
     public void startServer() throws InterruptedException {
-         bossGroup = new NioEventLoopGroup(3);
-         workerGroup = new NioEventLoopGroup();
+         bossGroup = new NioEventLoopGroup(1); // processes connections
+         workerGroup = new NioEventLoopGroup(); //processes i/o (read/write) of accepted connection
         final int port = 8883;
         try {
-            ServerBootstrap bootstrap = new ServerBootstrap();
+            ServerBootstrap bootstrap = new ServerBootstrap(); //used to set up netty server
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {

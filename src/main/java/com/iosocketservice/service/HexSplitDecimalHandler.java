@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class HexSplitDecimalHandler {
@@ -77,7 +78,7 @@ public class HexSplitDecimalHandler {
             }
             hexData.append(String.format("%02X", bytes[i]));
         }
-        log.info("Received HEX data length {}", hexData.length());
+//        log.info("Received HEX data length {}", hexData.length());
         handleSplit(hexData.toString());
         return hexData.toString();
     }
@@ -149,50 +150,50 @@ public class HexSplitDecimalHandler {
                 deviceIdNumber = extractBytes(hexBytes, 61, 12);
                 deviceIdNumberDec = convertHexToDecimal(deviceIdNumber);
 
-                System.out.println("openingFlag: " + openingFlag);
-                System.out.println("openingFlagDec: " + openingFlagDec);
-                System.out.println("deviceId: " + deviceId);
-                System.out.println("deviceIdDec: " + deviceIdDec);
-                System.out.println("packetType: " + packetType);
-                System.out.println("packetNumber: " + packetNumber);
-                System.out.println("packetLength: " + packetLength);
-                System.out.println("packetSize: " + packetSize);
-                System.out.println("packetSizeDec: " + packetSizeDec);
-                System.out.println("decimal Packet Size: " + decimalPacketSize);
-                System.out.println("Actual data: " + actualData);
-                System.out.println("Device Status: " + deviceStatus);
-                System.out.println("Device Status Dec: " + deviceStatusDec);
-                System.out.println("finger Print Id: " + fingerPrintId);
-                System.out.println("finger Print Id Dec: " + fingerPrintIdDec);
-                System.out.println("login Memory: " + loginMemory);
-                System.out.println("login Memory Dec: " + loginMemoryDec);
-
-                System.out.println("config DateTime: " + configDateTime);
-                System.out.println("config DateTime Dec: " + configDateTimeDec);
-                System.out.println("last Login DateTime: " + lastLoginDateTime);
-                System.out.println("last Login DateTime Dec: " + lastLoginDateTimeDec);
-                System.out.println("next Login Offset: " + nextLoginOffset);
-                System.out.println("next Login Offset Dec: " + nextLoginOffsetDec);
-                System.out.println("prev Record Count: " + prevRecordCount);
-                System.out.println("prev Record Count Dec: " + prevRecordCountDec);
-                System.out.println("total Enrol User: " + totalEnrolUser);
-                System.out.println("total Enrol User Dec: " + totalEnrolUserDec);
-                System.out.println("total Login User: " + totalLoginUser);
-                System.out.println("total Login User Dec: " + totalLoginUserDec);
-                System.out.println("total Record Push: " + totalRecordPush);
-                System.out.println("total Record Push Dec: " + totalRecordPushDec);
-                System.out.println("next Push Offset: " + nextPushOffset);
-                System.out.println("next Push Offset Dec: " + nextPushOffsetDec);
-                System.out.println("adminId Tag Number: " + adminIdTagNumber);
-                System.out.println("adminId Tag Number Dec: " + adminIdTagNumberDec);
-                System.out.println("deviceId Number: " + deviceIdNumber);
-                System.out.println("deviceId Number Dec: " + deviceIdNumberDec);
-
-                System.out.println("crc: " + crc);
-                System.out.println("crc Dec: " + crcDec);
-                System.out.println("closingFlag: " + closingFlag);
-                System.out.println("closingFlagDec: " + closingFlagDec);
-                System.out.println("==============================================");
+//                System.out.println("openingFlag: " + openingFlag);
+//                System.out.println("openingFlagDec: " + openingFlagDec);
+//                System.out.println("deviceId: " + deviceId);
+//                System.out.println("deviceIdDec: " + deviceIdDec);
+//                System.out.println("packetType: " + packetType);
+//                System.out.println("packetNumber: " + packetNumber);
+//                System.out.println("packetLength: " + packetLength);
+//                System.out.println("packetSize: " + packetSize);
+//                System.out.println("packetSizeDec: " + packetSizeDec);
+//                System.out.println("decimal Packet Size: " + decimalPacketSize);
+//                System.out.println("Actual data: " + actualData);
+//                System.out.println("Device Status: " + deviceStatus);
+//                System.out.println("Device Status Dec: " + deviceStatusDec);
+//                System.out.println("finger Print Id: " + fingerPrintId);
+//                System.out.println("finger Print Id Dec: " + fingerPrintIdDec);
+//                System.out.println("login Memory: " + loginMemory);
+//                System.out.println("login Memory Dec: " + loginMemoryDec);
+//
+//                System.out.println("config DateTime: " + configDateTime);
+//                System.out.println("config DateTime Dec: " + configDateTimeDec);
+//                System.out.println("last Login DateTime: " + lastLoginDateTime);
+//                System.out.println("last Login DateTime Dec: " + lastLoginDateTimeDec);
+//                System.out.println("next Login Offset: " + nextLoginOffset);
+//                System.out.println("next Login Offset Dec: " + nextLoginOffsetDec);
+//                System.out.println("prev Record Count: " + prevRecordCount);
+//                System.out.println("prev Record Count Dec: " + prevRecordCountDec);
+//                System.out.println("total Enrol User: " + totalEnrolUser);
+//                System.out.println("total Enrol User Dec: " + totalEnrolUserDec);
+//                System.out.println("total Login User: " + totalLoginUser);
+//                System.out.println("total Login User Dec: " + totalLoginUserDec);
+//                System.out.println("total Record Push: " + totalRecordPush);
+//                System.out.println("total Record Push Dec: " + totalRecordPushDec);
+//                System.out.println("next Push Offset: " + nextPushOffset);
+//                System.out.println("next Push Offset Dec: " + nextPushOffsetDec);
+//                System.out.println("adminId Tag Number: " + adminIdTagNumber);
+//                System.out.println("adminId Tag Number Dec: " + adminIdTagNumberDec);
+//                System.out.println("deviceId Number: " + deviceIdNumber);
+//                System.out.println("deviceId Number Dec: " + deviceIdNumberDec);
+//
+//                System.out.println("crc: " + crc);
+//                System.out.println("crc Dec: " + crcDec);
+//                System.out.println("closingFlag: " + closingFlag);
+//                System.out.println("closingFlagDec: " + closingFlagDec);
+//                System.out.println("==============================================");
                 streamDataService.postConfigurationHexRawData(
                         openingFlag, deviceId, packetType, packetNumber,
                         packetLength, packetSize, deviceStatus, fingerPrintId,
@@ -210,29 +211,29 @@ public class HexSplitDecimalHandler {
             } else if (packetType.equals("02")) {
                 // Process enrollment frame
                 actualData = extractBytes(hexBytes, 18, hexBytes.length - 18); // Exclude first 14 and last 4
-                System.out.println("openingFlag: " + openingFlag);
-                System.out.println("deviceId: " + deviceId);
-                System.out.println("packetType: " + packetType);
-                System.out.println("packetNumber: " + packetNumber);
-                System.out.println("packetLength: " + packetLength);
-                System.out.println("packetSize: " + packetSize);
-                System.out.println("decimal Packet Size: " + decimalPacketSize);
-                System.out.println("Actual data: " + actualData);
+//                System.out.println("openingFlag: " + openingFlag);
+//                System.out.println("deviceId: " + deviceId);
+//                System.out.println("packetType: " + packetType);
+//                System.out.println("packetNumber: " + packetNumber);
+//                System.out.println("packetLength: " + packetLength);
+//                System.out.println("packetSize: " + packetSize);
+//                System.out.println("decimal Packet Size: " + decimalPacketSize);
+//                System.out.println("Actual data: " + actualData);
 
                 int actualDataLength = Integer.valueOf(decimalPacketSize) / 20;
-                System.out.println("----------------:: " + actualDataLength);
+//                System.out.println("----------------:: " + actualDataLength);
                 for (int i = 0; i < actualDataLength; i++) {
-                    int pos = i * 20;
+                    int pos = i * 21;
                     fingerPrintId = extractBytes(hexBytes, 18 + pos, 2);
                     fingerPrintIdDec = convertHexToDecimal(fingerPrintId);
                     idTagNumber = extractBytes(hexBytes, 20 + pos, 12);
                     idTagNumberDec = convertHexToDecimal(idTagNumber);
                     dateTime = extractBytes(hexBytes, 32 + pos, 7);
                     dateTimeDec = convertHexToDecimal(dateTime);
-                    System.out.println("finger Print Id: " + fingerPrintId);
-                    System.out.println("id Tag Number: " + idTagNumber);
-                    System.out.println("DateTime: " + dateTime);
-                    System.out.println("---------------------------------------------------");
+//                    System.out.println("finger Print Id: " + fingerPrintId);
+//                    System.out.println("id Tag Number: " + idTagNumber);
+//                    System.out.println("DateTime: " + dateTime);
+//                    System.out.println("---------------------------------------------------");
                     streamDataService.postEnrollmentHexRawData(
                             openingFlag, deviceId, packetType, packetNumber,
                             packetLength, packetSize, fingerPrintId,
@@ -243,22 +244,21 @@ public class HexSplitDecimalHandler {
                             idTagNumberDec, dateTimeDec, crcDec, closingFlagDec
                     );
                 }
-                System.out.println("crc: " + crc);
-                System.out.println("closingFlag: " + closingFlag);
-                System.out.println("====================----==========================");
+//                System.out.println("crc: " + crc);
+//                System.out.println("closingFlag: " + closingFlag);
+//                System.out.println("====================----==========================");
             } else {
                 // Process attendance frame
                 actualData = extractBytes(hexBytes, 18, hexBytes.length - 18); // Exclude first 14 and last 4
-                System.out.println("openingFlag: " + openingFlag);
-                System.out.println("deviceId: " + deviceId);
-                System.out.println("packetType: " + packetType);
-                System.out.println("packetNumber: " + packetNumber);
-                System.out.println("packetLength: " + packetLength);
-                System.out.println("packetSize: " + packetSize);
-                System.out.println("decimal Packet Size: " + decimalPacketSize);
-                System.out.println("Actual data: " + actualData);
+//                System.out.println("openingFlag: " + openingFlag);
+//                System.out.println("deviceId: " + deviceId);
+//                System.out.println("packetType: " + packetType);
+//                System.out.println("packetNumber: " + packetNumber);
+//                System.out.println("packetLength: " + packetLength);
+//                System.out.println("packetSize: " + packetSize);
+//                System.out.println("decimal Packet Size: " + decimalPacketSize);
+//                System.out.println("Actual data: " + actualData);
                 int actualDataLength = Integer.valueOf(decimalPacketSize) / 10;
-                System.out.println("----------------:: " + actualDataLength);
                 for (int i = 0; i < actualDataLength; i++) {
                     int pos = i * 10;
                     fingerPrintId = extractBytes(hexBytes, 18 + pos, 2);
@@ -267,10 +267,10 @@ public class HexSplitDecimalHandler {
                     loginTypeDec = convertHexToDecimal(loginType);
                     dateTime = extractBytes(hexBytes, 21 + pos, 7);
                     dateTimeDec = convertHexToDecimal(dateTime);
-                    System.out.println("finger Print Id: " + fingerPrintId);
-                    System.out.println("login Type: " + loginType);
-                    System.out.println("DateTime: " + dateTime);
-                    System.out.println("---------------------------------------------------");
+//                    System.out.println("finger Print Id: " + fingerPrintId);
+//                    System.out.println("login Type: " + loginType);
+//                    System.out.println("DateTime: " + dateTime);
+//                    System.out.println("---------------------------------------------------");
                     streamDataService.postAttendanceHexRawData(
                             openingFlag, deviceId, packetType, packetNumber,
                             packetLength, packetSize, fingerPrintId,
@@ -281,8 +281,8 @@ public class HexSplitDecimalHandler {
                             loginTypeDec, dateTimeDec, crcDec, closingFlagDec
                     );
                 }
-                System.out.println("crc: " + crc);
-                System.out.println("closingFlag: " + closingFlag);
+//                System.out.println("crc: " + crc);
+//                System.out.println("closingFlag: " + closingFlag);
             }
 
             assert openingFlag != null;
@@ -300,7 +300,21 @@ public class HexSplitDecimalHandler {
             String year = "20" + hexSegments[0]; // Prefix with 20 for 2000s century
             String month = hexSegments[1];
 
-            String day = hexSegments[3];
+            String day = hexSegments[2];
+            String dayOfWeek = hexSegments[3];
+//            if(Objects.equals(dayOfWeek, "01")){
+//                dayOfWeek = "Sun";
+//            } else if(Objects.equals(dayOfWeek, "02")){
+//                dayOfWeek = "Mon";
+//            }else if(Objects.equals(dayOfWeek, "03")){
+//                dayOfWeek = "Wed";
+//            }else if(Objects.equals(dayOfWeek, "04")){
+//                dayOfWeek = "Thu";
+//            }else if(Objects.equals(dayOfWeek, "05")){
+//                dayOfWeek = "Fri";
+//            }else {
+//                dayOfWeek = "Sat";
+//            }
             String hour = hexSegments[4];
             String minute = hexSegments[5];
             String second = hexSegments[6];
@@ -308,6 +322,7 @@ public class HexSplitDecimalHandler {
             // Combine them into a formatted string
             String formattedDateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 
+            System.out.println("formattedDateTime: "+ formattedDateTime);
             return formattedDateTime;
         }
 
