@@ -4,11 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class HexSplitDecimalHandler {
@@ -220,8 +217,8 @@ public class HexSplitDecimalHandler {
 //                System.out.println("decimal Packet Size: " + decimalPacketSize);
 //                System.out.println("Actual data: " + actualData);
 
-                int actualDataLength = Integer.valueOf(decimalPacketSize) / 20;
-//                System.out.println("----------------:: " + actualDataLength);
+                int actualDataLength = Integer.valueOf(decimalPacketSize) / 21;
+                System.out.println("---------------- actualDataLength:: " + actualDataLength);
                 for (int i = 0; i < actualDataLength; i++) {
                     int pos = i * 21;
                     fingerPrintId = extractBytes(hexBytes, 18 + pos, 2);

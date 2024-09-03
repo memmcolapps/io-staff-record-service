@@ -1,25 +1,14 @@
 package com.iosocketservice;
 
-import com.iosocketservice.service.HexBinaryHandler;
-import com.iosocketservice.service.NettyServer;
-import io.netty.bootstrap.ServerBootstrap;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import jakarta.annotation.PreDestroy;
+import com.iosocketservice.service.NettyServer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextClosedEvent;
-import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 public class IoSocketServiceApplication implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
@@ -33,7 +22,14 @@ public class IoSocketServiceApplication implements CommandLineRunner, Applicatio
 
     @Override
     public void run(String... args) throws InterruptedException {
-        nettyServer.startServer();
+        new Thread(() -> {
+            try {
+                nettyServer.startServer();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override
