@@ -116,7 +116,6 @@ public class HexSplitDecimalHandler {
             closingFlag = extractBytes(hexBytes, hexBytes.length - 2, 2);
             closingFlagDec = convertHexToDecimal(closingFlag);
 
-
             // Process configuration frame
             if (packetType.equals("01")) {
                 actualData = extractBytes(hexBytes, 18, hexBytes.length - 18); // Exclude first 14 and last 4
@@ -256,6 +255,7 @@ public class HexSplitDecimalHandler {
 //                System.out.println("decimal Packet Size: " + decimalPacketSize);
 //                System.out.println("Actual data: " + actualData);
                 int actualDataLength = Integer.valueOf(decimalPacketSize) / 10;
+                System.out.println("---------------- actualDataLength:: " + actualDataLength);
                 for (int i = 0; i < actualDataLength; i++) {
                     int pos = i * 10;
                     fingerPrintId = extractBytes(hexBytes, 18 + pos, 2);
@@ -278,8 +278,8 @@ public class HexSplitDecimalHandler {
                             loginTypeDec, dateTimeDec, crcDec, closingFlagDec
                     );
                 }
-//                System.out.println("crc: " + crc);
-//                System.out.println("closingFlag: " + closingFlag);
+                System.out.println("crc: " + crc);
+                System.out.println("closingFlag: " + closingFlag);
             }
 
             assert openingFlag != null;

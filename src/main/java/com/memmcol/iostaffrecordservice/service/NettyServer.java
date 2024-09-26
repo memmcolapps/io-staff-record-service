@@ -20,14 +20,17 @@ public class NettyServer {
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
     private ChannelFuture channelFuture;
-    @Autowired
+
+//    private final int port;
+//    @Autowired
     public NettyServer(StreamDataService streamDataService) {
         this.streamDataService = streamDataService;
+
     }
     public void startServer() throws InterruptedException {
          bossGroup = new NioEventLoopGroup(1); // processes connections
          workerGroup = new NioEventLoopGroup(); //processes i/o (read/write) of accepted connection
-        final int port = 8883;
+        final int port = 8884;
         try {
             ServerBootstrap bootstrap = new ServerBootstrap(); //used to set up netty server
             bootstrap.group(bossGroup, workerGroup)
@@ -39,7 +42,7 @@ public class NettyServer {
                         }
                     });
             channelFuture = bootstrap.bind(port).sync();
-            System.out.println("Netty server started on port 8883");
+            System.out.println("Netty server started on port "+port);
             channelFuture.channel().closeFuture().sync();
 //            bootstrap.bind(8883).sync().channel().closeFuture().sync();
 //            Channel channel = bootstrap.bind(port).sync().channel();
