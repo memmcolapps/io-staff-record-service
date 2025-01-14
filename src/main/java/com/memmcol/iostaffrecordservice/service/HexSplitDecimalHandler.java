@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class HexSplitDecimalHandler {
@@ -199,7 +201,7 @@ public class HexSplitDecimalHandler {
                 streamDataService.postConfigurationDecimalData(
                         openingFlag, deviceIdDec, packetType, packetNumber,
                         packetLength, packetSizeDec, deviceStatus, fingerPrintId,
-                        loginMemoryDec, configDateTime, lastLoginDateTime, nextLoginOffsetDec,
+                        loginMemoryDec, configDateTimeDec, lastLoginDateTimeDec, nextLoginOffsetDec,
                         prevRecordCountDec, totalEnrolUserDec, totalLoginUserDec, totalRecordPushDec,
                         nextPushOffsetDec, adminIdTagNumber, deviceIdNumber, crc, closingFlag
                 );
@@ -255,7 +257,7 @@ public class HexSplitDecimalHandler {
 //                System.out.println("decimal Packet Size: " + decimalPacketSize);
 //                System.out.println("Actual data: " + actualData);
                 int actualDataLength = Integer.valueOf(decimalPacketSize) / 10;
-                System.out.println("---------------- actualDataLength:: " + actualDataLength);
+                System.out.println("----------------attendance actualDataLength:: " + actualDataLength);
                 for (int i = 0; i < actualDataLength; i++) {
                     int pos = i * 10;
                     fingerPrintId = extractBytes(hexBytes, 18 + pos, 2);
@@ -264,6 +266,15 @@ public class HexSplitDecimalHandler {
                     loginTypeDec = convertHexToDecimal(loginType);
                     dateTime = extractBytes(hexBytes, 21 + pos, 7);
                     dateTimeDec = convertHexToDecimal(dateTime);
+//                    System.out.println("openingFlag:: " + openingFlag);
+//                    System.out.println("deviceId:: " + deviceId);
+//                    System.out.println("packetType:: " + packetType);
+//                    System.out.println("packetNumber:: " + packetNumber);
+//                    System.out.println("packetLength:: " + packetLength);
+//                    System.out.println("packetSize:: " + packetSize);
+//                    System.out.println("decimal Packet Size:: " + decimalPacketSize);
+//                    System.out.println("finger PrintId Dec:: " + fingerPrintIdDec);
+////                    System.out.println("Actual data:: " + actualData);
 //                    System.out.println("finger Print Id: " + fingerPrintId);
 //                    System.out.println("login Type: " + loginType);
 //                    System.out.println("DateTime: " + dateTime);
@@ -278,8 +289,8 @@ public class HexSplitDecimalHandler {
                             loginTypeDec, dateTimeDec, crc, closingFlag
                     );
                 }
-                System.out.println("crc: " + crc);
-                System.out.println("closingFlag: " + closingFlag);
+                System.out.println("crc:: " + crc);
+                System.out.println("closingFlag:: " + closingFlag);
             }
 
             assert openingFlag != null;
@@ -293,32 +304,22 @@ public class HexSplitDecimalHandler {
 
         StringBuilder decimalResult = new StringBuilder();
 
-        if (hexSegments.length == 7) {
-            String year = "20" + hexSegments[0]; // Prefix with 20 for 2000s century
+        if (hexSegments.length == 7 || hexSegments.length == 6) {
+            int currentYear = Year.now().getValue();
+            int currentCentury = currentYear / 100; // Determine the current century dynamically
+            String year = Objects.equals(hexSegments[0], "00") ? "00"+hexSegments[0] : currentCentury + hexSegments[0]; // Prefix with the current century
+
+//          String year = "20" + hexSegments[0]; // Prefix with 20 for 2000s century
             String month = hexSegments[1];
 
             String day = hexSegments[2];
             String dayOfWeek = hexSegments[3];
-//            if(Objects.equals(dayOfWeek, "01")){
-//                dayOfWeek = "Sun";
-//            } else if(Objects.equals(dayOfWeek, "02")){
-//                dayOfWeek = "Mon";
-//            }else if(Objects.equals(dayOfWeek, "03")){
-//                dayOfWeek = "Wed";
-//            }else if(Objects.equals(dayOfWeek, "04")){
-//                dayOfWeek = "Thu";
-//            }else if(Objects.equals(dayOfWeek, "05")){
-//                dayOfWeek = "Fri";
-//            }else {
-//                dayOfWeek = "Sat";
-//            }
             String hour = hexSegments[4];
             String minute = hexSegments[5];
-            String second = hexSegments[6];
-
-            // Combine them into a formatted string
+            String second = hexSegments.length == 6 ? "00" : hexSegments[6];
+            System.out.println("hexSegments: "+ hexSegments.length);
+            System.out.println("second: "+ second);
             String formattedDateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-
             System.out.println("formattedDateTime: "+ formattedDateTime);
             return formattedDateTime;
         }
@@ -362,3 +363,14 @@ public class HexSplitDecimalHandler {
         return frames;
     }
 }
+
+
+
+//Configuration
+//3F F3 00 00 00 00 00 00 00 00 00 01 18 18 01 01 01 37 AA EE EE 00 04 29 F8 24 07 25 05 15 42 00 00 00 00 00 00 16 E4 00 16 00 03 00 16 00 00 15 2C 33 38 30 30 34 32 32 38 45 45 42 43 FF FF FF FF FF FF FF FF FF FF FF FF BB AA 21 12
+//
+//Enrollment
+//3F F3 00 00 00 00 00 00 00 00 00 01 18 18 02 01 01 3F 00 01 33 38 30 30 34 32 32 38 45 45 42 43 24 07 25 05 15 41 17 00 02 30 32 30 30 31 36 33 33 30 46 32 38 24 09 09 02 12 59 18 00 03 30 37 30 30 33 46 44 41 44 39 33 42 24 12 16 02 10 22 39 EE 0A 21 12
+//
+//Attendance
+//3F F3 00 00 00 00 00 00 00 00 00 01 18 18 03 01 01 D2 00 01 01 24 07 25 05 15 42 17 00 01 02 24 07 25 05 15 42 40 00 01 01 24 08 13 03 10 39 35 00 01 01 24 08 23 06 10 38 41 00 01 03 24 08 23 06 10 39 09 00 01 01 24 08 23 06 10 41 25 00 01 04 24 08 23 06 10 44 45 00 01 03 24 08 23 06 10 58 02 00 01 02 24 08 23 06 11 03 57 00 01 03 24 08 23 06 11 05 16 00 01 03 24 08 23 06 11 06 47 00 01 03 24 08 23 06 11 10 19 00 01 03 24 08 23 06 11 25 37 00 02 01 24 09 09 02 13 00 09 00 01 01 24 11 05 03 12 25 57 00 01 02 24 11 05 03 12 26 27 00 01 03 24 11 05 03 12 27 14 00 01 04 24 11 05 03 12 27 56 00 03 01 24 12 16 02 10 32 53 00 03 04 24 12 16 02 10 34 06 00 03 03 24 12 16 02 10 34 37 62 A7 21 12 3F F3 00 00 00 00 00 00 00 00 00 01 18 18 03 02 01 DC 00 03 02 24 12 16 02 10 35 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF DD 39 21 12

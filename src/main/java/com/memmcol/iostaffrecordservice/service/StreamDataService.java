@@ -42,6 +42,19 @@ public class StreamDataService {
             String openingFlag, String deviceId, String packetType, String packetNumber,
             String packetLength, String packetSize, String fingerPrintId, String loginType,
             String dateTime, String crc, String closingFlag) {
+        System.out.println("-------------------------start--------------------------");
+        System.out.println("openingFlag:: " + openingFlag);
+        System.out.println("deviceId:: " + deviceId);
+        System.out.println("packetType:: " + packetType);
+        System.out.println("packetNumber:: " + packetNumber);
+        System.out.println("packetLength:: " + packetLength);
+        System.out.println("packetSize:: " + packetSize);
+        System.out.println("finger Print Id: " + fingerPrintId);
+        System.out.println("login Type: " + loginType);
+        System.out.println("DateTime: " + dateTime);
+        System.out.println("crc: " + crc);
+        System.out.println("closingFlag: " + closingFlag);
+        System.out.println("--------------------------end--------------------------");
         mapper.insertAttendanceHexData(
                 openingFlag, deviceId, packetType, packetNumber,
                 packetLength, packetSize, fingerPrintId, loginType,
@@ -57,11 +70,13 @@ public class StreamDataService {
             String prevRecordCountDec, String totalEnrolUserDec, String totalLoginUserDec,
             String totalRecordPushDec, String nextPushOffsetDec, String adminIdTagNumberDec,
             String deviceIdNumberDec, String crcDec, String closingFlagDec) {
-        if(deviceStatusDec.trim() == "AA EE EE"){
+        System.out.println("configDateTimeDec: " + configDateTimeDec);
+        if(deviceStatusDec.trim().equals("AA EE EE")){
             deviceStatusDec = "Active";
         } else {
             deviceStatusDec = "Inactive";
         }
+//        System.out.println("formattedDateTime: "+ formattedDateTime);
         mapper.insertConfigurationDecData(
                 openingFlagDec, deviceIdDec, packetType,
                 packetNumber, packetLength, packetSizeDec,
