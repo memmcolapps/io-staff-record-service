@@ -197,11 +197,11 @@ public class HexSplitDecimalHandler {
                         prevRecordCount, totalEnrolUser, totalLoginUser, totalRecordPush,
                         nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag);
                 streamDataService.postConfigurationDecimalData(
-                        openingFlagDec, deviceIdDec, packetType, packetNumber,
-                        packetLength, packetSizeDec, deviceStatusDec, fingerPrintIdDec,
+                        openingFlag, deviceIdDec, packetType, packetNumber,
+                        packetLength, packetSizeDec, deviceStatus, fingerPrintId,
                         loginMemoryDec, configDateTime, lastLoginDateTime, nextLoginOffsetDec,
                         prevRecordCountDec, totalEnrolUserDec, totalLoginUserDec, totalRecordPushDec,
-                        nextPushOffsetDec, adminIdTagNumberDec, deviceIdNumberDec, crcDec, closingFlagDec
+                        nextPushOffsetDec, adminIdTagNumber, deviceIdNumber, crc, closingFlag
                 );
 
             } else if (packetType.equals("02")) {
@@ -235,9 +235,9 @@ public class HexSplitDecimalHandler {
                             packetLength, packetSize, fingerPrintId,
                             idTagNumber, dateTime, crc, closingFlag);
                     streamDataService.postEnrollmentDecimalData(
-                            openingFlagDec, deviceIdDec, packetType, packetNumber,
-                            packetLength, packetSizeDec, fingerPrintIdDec,
-                            idTagNumberDec, dateTimeDec, crcDec, closingFlagDec
+                            openingFlag, deviceIdDec, packetType, packetNumber,
+                            packetLength, packetSizeDec, fingerPrintId,
+                            idTagNumber, dateTimeDec, crc, closingFlag
                     );
                 }
 //                System.out.println("crc: " + crc);
@@ -273,9 +273,9 @@ public class HexSplitDecimalHandler {
                             packetLength, packetSize, fingerPrintId,
                             loginType, dateTime, crc, closingFlag);
                     streamDataService.postAttendanceDecimalData(
-                            openingFlagDec, deviceIdDec, packetType, packetNumber,
-                            packetLength, packetSizeDec, fingerPrintIdDec,
-                            loginTypeDec, dateTimeDec, crcDec, closingFlagDec
+                            openingFlag, deviceIdDec, packetType, packetNumber,
+                            packetLength, packetSizeDec, fingerPrintId,
+                            loginTypeDec, dateTimeDec, crc, closingFlag
                     );
                 }
                 System.out.println("crc: " + crc);

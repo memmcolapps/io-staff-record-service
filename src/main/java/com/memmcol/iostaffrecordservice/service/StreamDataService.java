@@ -17,6 +17,7 @@ public class StreamDataService {
                          String loginMemory, String configDateTime, String lastLoginDateTime, String nextLoginOffset,
                          String prevRecordCount, String totalEnrolUser, String totalLoginUser, String totalRecordPush,
                          String nextPushOffset, String adminIdTagNumber, String deviceIdNumber, String crc, String closingFlag) {
+
         mapper.insertConfigurationHexData(
                 openingFlag, deviceId, packetType, packetNumber,
                 packetLength, packetSize, deviceStatus, fingerPrintId,
@@ -56,6 +57,11 @@ public class StreamDataService {
             String prevRecordCountDec, String totalEnrolUserDec, String totalLoginUserDec,
             String totalRecordPushDec, String nextPushOffsetDec, String adminIdTagNumberDec,
             String deviceIdNumberDec, String crcDec, String closingFlagDec) {
+        if(deviceStatusDec.trim() == "AA EE EE"){
+            deviceStatusDec = "Active";
+        } else {
+            deviceStatusDec = "Inactive";
+        }
         mapper.insertConfigurationDecData(
                 openingFlagDec, deviceIdDec, packetType,
                 packetNumber, packetLength, packetSizeDec,
