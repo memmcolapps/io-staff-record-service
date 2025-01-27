@@ -16,14 +16,14 @@ public class StreamDataService {
                          String packetLength, String packetSize, String deviceStatus, String fingerPrintId,
                          String loginMemory, String configDateTime, String lastLoginDateTime, String nextLoginOffset,
                          String prevRecordCount, String totalEnrolUser, String totalLoginUser, String totalRecordPush,
-                         String nextPushOffset, String adminIdTagNumber, String deviceIdNumber, String crc, String closingFlag) {
+                         String nextPushOffset, String adminIdTagNumber, /*String deviceIdNumber,*/ String crc, String closingFlag) {
 
         mapper.insertConfigurationHexData(
                 openingFlag, deviceId, packetType, packetNumber,
                 packetLength, packetSize, deviceStatus, fingerPrintId,
                 loginMemory, configDateTime, lastLoginDateTime, nextLoginOffset,
                 prevRecordCount, totalEnrolUser, totalLoginUser, totalRecordPush,
-                nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag
+                nextPushOffset, adminIdTagNumber, /*deviceIdNumber,*/ crc, closingFlag
         );
     }
 
@@ -42,19 +42,19 @@ public class StreamDataService {
             String openingFlag, String deviceId, String packetType, String packetNumber,
             String packetLength, String packetSize, String fingerPrintId, String loginType,
             String dateTime, String crc, String closingFlag) {
-        System.out.println("-------------------------start--------------------------");
-        System.out.println("openingFlag:: " + openingFlag);
-        System.out.println("deviceId:: " + deviceId);
-        System.out.println("packetType:: " + packetType);
-        System.out.println("packetNumber:: " + packetNumber);
-        System.out.println("packetLength:: " + packetLength);
-        System.out.println("packetSize:: " + packetSize);
-        System.out.println("finger Print Id: " + fingerPrintId);
-        System.out.println("login Type: " + loginType);
-        System.out.println("DateTime: " + dateTime);
-        System.out.println("crc: " + crc);
-        System.out.println("closingFlag: " + closingFlag);
-        System.out.println("--------------------------end--------------------------");
+//        System.out.println("-------------------------start--------------------------");
+//        System.out.println("openingFlag:: " + openingFlag);
+//        System.out.println("deviceId:: " + deviceId);
+//        System.out.println("packetType:: " + packetType);
+//        System.out.println("packetNumber:: " + packetNumber);
+//        System.out.println("packetLength:: " + packetLength);
+//        System.out.println("packetSize:: " + packetSize);
+//        System.out.println("finger Print Id: " + fingerPrintId);
+//        System.out.println("login Type: " + loginType);
+//        System.out.println("DateTime: " + dateTime);
+//        System.out.println("crc: " + crc);
+//        System.out.println("closingFlag: " + closingFlag);
+//        System.out.println("--------------------------end--------------------------");
         mapper.insertAttendanceHexData(
                 openingFlag, deviceId, packetType, packetNumber,
                 packetLength, packetSize, fingerPrintId, loginType,
@@ -69,7 +69,7 @@ public class StreamDataService {
             String configDateTimeDec, String lastLoginDateTimeDec, String nextLoginOffsetDec,
             String prevRecordCountDec, String totalEnrolUserDec, String totalLoginUserDec,
             String totalRecordPushDec, String nextPushOffsetDec, String adminIdTagNumberDec,
-            String deviceIdNumberDec, String crcDec, String closingFlagDec) {
+            /*String deviceIdNumberDec,*/ String crcDec, String closingFlagDec) {
         System.out.println("configDateTimeDec: " + configDateTimeDec);
         if(deviceStatusDec.trim().equals("AA EE EE")){
             deviceStatusDec = "Active";
@@ -84,7 +84,7 @@ public class StreamDataService {
                 configDateTimeDec, lastLoginDateTimeDec, nextLoginOffsetDec,
                 prevRecordCountDec, totalEnrolUserDec, totalLoginUserDec,
                 totalRecordPushDec, nextPushOffsetDec, adminIdTagNumberDec,
-                deviceIdNumberDec, crcDec, closingFlagDec
+                /*deviceIdNumberDec,*/ crcDec, closingFlagDec
         );
     }
 
@@ -108,8 +108,10 @@ public class StreamDataService {
             loginTypeDec = "Logout";
         } else if(Integer.parseInt(loginTypeDec) == 3){
             loginTypeDec = "Step-in";
-        } else {
+        } else if(Integer.parseInt(loginTypeDec) == 4){
             loginTypeDec = "Step-out";
+        } else {
+            loginTypeDec = "Undefined";
         }
         mapper.insertAttendanceDecData(
                 openingFlagDec, deviceIdDec, packetType, packetNumber,

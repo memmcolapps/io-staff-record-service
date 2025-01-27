@@ -14,18 +14,18 @@ public interface StreamDataMapper {
     @Insert("INSERT INTO ConfigurationRawFrame(openingFlag, deviceId, packetType, packetNumber, " +
             "packetLength, packetSize, deviceStatus, fingerPrintId, loginMemory, configDateTime, " +
             "lastLoginDateTime, nextLoginOffset, prevRecordCount, totalEnrolUser, totalLoginUser," +
-            "totalRecordPush, nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag)" +
+            "totalRecordPush, nextPushOffset, adminIdTagNumber, crc, closingFlag)" +
             "VALUES(#{openingFlag}, #{deviceId}, #{packetType}, #{packetNumber}, #{packetLength}," +
             "#{packetSize}, #{deviceStatus}, #{fingerPrintId}, #{loginMemory}, #{configDateTime}," +
             "#{lastLoginDateTime}, #{nextLoginOffset}, #{prevRecordCount}, #{totalEnrolUser}," +
             "#{totalLoginUser}, #{totalRecordPush}, #{nextPushOffset}, #{adminIdTagNumber}," +
-            "#{deviceIdNumber}, #{crc}, #{closingFlag})")
+            "#{crc}, #{closingFlag})")
     void insertConfigurationHexData(
             String openingFlag, String deviceId, String packetType, String packetNumber,
             String packetLength, String packetSize, String deviceStatus, String fingerPrintId,
             String loginMemory, String configDateTime, String lastLoginDateTime, String nextLoginOffset,
             String prevRecordCount, String totalEnrolUser, String totalLoginUser, String totalRecordPush,
-            String nextPushOffset, String adminIdTagNumber, String deviceIdNumber, String crc, String closingFlag);
+            String nextPushOffset, String adminIdTagNumber, String crc, String closingFlag);
 
     @Insert("INSERT INTO EnrollmentRawFrame(openingFlag, deviceId, packetType, packetNumber, " +
             "packetLength, packetSize, fingerPrintId, idTagNumber, dateTime, crc, closingFlag)" +
@@ -49,12 +49,12 @@ public interface StreamDataMapper {
     @Insert("INSERT INTO ConfigurationDecFrame(openingFlag, deviceId, packetType, packetNumber," +
             "packetLength, packetSize, deviceStatus, fingerPrintId, loginMemory, configDateTime," +
             "lastLoginDateTime, nextLoginOffset, prevRecordCount, totalEnrolUser, totalLoginUser," +
-            "totalRecordPush, nextPushOffset, adminIdTagNumber, deviceIdNumber, crc, closingFlag)" +
+            "totalRecordPush, nextPushOffset, adminIdTagNumber, crc, closingFlag)" +
             "VALUES(#{openingFlagDec}, #{deviceIdDec}, #{packetType}, #{packetNumber}, #{packetLength}," +
             "#{packetSizeDec}, #{deviceStatusDec}, #{fingerPrintIdDec}, #{loginMemoryDec}, #{configDateTimeDec}," +
             "#{lastLoginDateTimeDec}, #{nextLoginOffsetDec}, #{prevRecordCountDec}, #{totalEnrolUserDec}," +
             "#{totalLoginUserDec}, #{totalRecordPushDec}, #{nextPushOffsetDec}, #{adminIdTagNumberDec}," +
-            "#{deviceIdNumberDec}, #{crcDec}, #{closingFlagDec})")
+            "#{crcDec}, #{closingFlagDec})")
     void insertConfigurationDecData(
             String openingFlagDec, String deviceIdDec, String packetType,
             String packetNumber, String packetLength, String packetSizeDec,
@@ -62,7 +62,7 @@ public interface StreamDataMapper {
             String configDateTimeDec, String lastLoginDateTimeDec, String nextLoginOffsetDec,
             String prevRecordCountDec, String totalEnrolUserDec, String totalLoginUserDec,
             String totalRecordPushDec, String nextPushOffsetDec, String adminIdTagNumberDec,
-            String deviceIdNumberDec, String crcDec, String closingFlagDec);
+           /* String deviceIdNumberDec, */String crcDec, String closingFlagDec);
 
     @Insert("INSERT INTO EnrollmentDecFrame(openingFlag, deviceId, packetType, packetNumber," +
             "packetLength, packetSize, fingerPrintId, idTagNumber, dateTime, crc, closingFlag)" +
